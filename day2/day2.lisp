@@ -1,0 +1,42 @@
+(defun table1 ()
+  (let ((table (make-hash-table :test 'equal)))
+    (progn
+      (setf (gethash "A X" table) 4)
+      (setf (gethash "A Y" table) 8)
+      (setf (gethash "A Z" table) 3)
+      (setf (gethash "B X" table) 1)
+      (setf (gethash "B Y" table) 5)
+      (setf (gethash "B Z" table) 9)
+      (setf (gethash "C X" table) 7)
+      (setf (gethash "C Y" table) 2)
+      (setf (gethash "C Z" table) 6)
+      table)))
+
+(defun table2 ()
+  (let ((table (make-hash-table :test 'equal)))
+    (progn
+      (setf (gethash "A X" table) 3)
+      (setf (gethash "A Y" table) 4)
+      (setf (gethash "A Z" table) 8)
+      (setf (gethash "B X" table) 1)
+      (setf (gethash "B Y" table) 5)
+      (setf (gethash "B Z" table) 9)
+      (setf (gethash "C X" table) 2)
+      (setf (gethash "C Y" table) 6)
+      (setf (gethash "C Z" table) 7)
+      table)))
+
+(defun total-score (hash-table)
+  (with-open-file (stream "./input")
+    (let ((total 0))
+      (do ((line (read-line stream nil) (read-line stream nil)))
+          ((null line))
+        (let* ((key (subseq line 0 3))
+               (score (gethash key hash-table)))
+          (setq total (+ total score))))
+      total)))
+
+(print (total-score (table1)))
+(print (total-score (table2)))
+
+
